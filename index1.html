@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <style>
+    body {
+      background-image: url(./red-vectors-4d.jpg);
+      font-family: "JetBrains Mono";
+      height: 100vh;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    h2 {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+      margin-top: -50px;
+      text-shadow: 2px 2px 4px rgb(249, 139, 4);
+    }
+
+    .clock {
+      display: flex;
+    }
+
+    .clock div {
+      margin: 5px;
+      position: relative;
+    }
+
+    .clock span {
+      width: 200px;
+      height: 140px;
+      background: gray;
+      color: white;
+      opacity: 0.8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 140px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .clock .text {
+      height: 50px;
+      font-size: 30px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: darkorange;
+
+      opacity: 0.8;
+    }
+
+    .clock #ampm {
+      bottom: 0;
+      position: absolute;
+      width: 100px;
+      height: 50px;
+      font-size: 30px;
+      background: rgb(8, 15, 213);
+    }
+  </style>
+  <body>
+    <h2>Digital Clock</h2>
+    <div class="clock">
+      <div>
+        <span id="h">12</span>
+        <span class="text">Hours</span>
+      </div>
+      <div>
+        <span id="m">12</span>
+        <span class="text">MInutes</span>
+      </div>
+      <div>
+        <span id="s">12</span>
+        <span class="text">Seconds</span>
+      </div>
+      <div>
+        <span id="ampm">AM </span>
+      </div>
+    </div>
+    <script>
+      // Создаем переменный и достаем элементы по айди
+      const h = document.getElementById("h");
+      const m = document.getElementById("m");
+      const s = document.getElementById("s");
+      const ampm = document.getElementById("ampm");
+
+      //Определяем формат цифр до 10 и добавляем 0 к однозначным цифрам
+      function format(val) {
+        return val < 10 ? "0" + val : val;
+      }
+      // Создаем функцию которая устанавливает время и изменяет формат от 24 на 12 часовой
+      function updateTime() {
+        const now = new Date();
+
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+
+        let period = "AM";
+        if (hours >= 12) {
+          period = "PM";
+          if (hours > 12) hours -= 12;
+        }
+
+        if (hours === 0) hours = 12;
+
+        h.innerHTML = format(hours);
+        m.innerHTML = format(minutes);
+        s.innerHTML = format(seconds);
+        ampm.innerHTML = period;
+
+        setTimeout(updateTime, 1000);
+      }
+      updateTime();
+      setInterval(updateTime, 1000);
+    </script>
+  </body>
+</html>
